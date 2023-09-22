@@ -11,5 +11,5 @@ services:
     environment:
       - UNIFIIP=10.11.1.2
     ports:
-      - "10.40.2.222:10001:10001/udp"
+      - "10001:10001/udp"
 ```
