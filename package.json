@@ -1,0 +1,9 @@
+{
+    "name": "unifi-proxy",
+    "version": "1.0.0",
+    "description": "unifi-proxy",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js packet.json"
+    }
+  }

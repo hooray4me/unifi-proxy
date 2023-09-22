@@ -1,26 +1,29 @@
 #!/usr/bin/env node
-/*
- * Scan for unifi devices via UDP discovery.
- *
- * Author: Dave Eddy <dave@daveeddy.com>
- * Date: July 13, 2021
- * License: MIT
- */
 
 var dgram = require('dgram');
 var socket = dgram.createSocket('udp4');
+const fs = require('fs');
 
-// unifi discovery info
 var port = 10001;
 var host = '255.255.255.255';
 var mcastAddr = '233.89.188.1';
 var message = Buffer.from([1, 0, 0, 0]);
+var unifiIp = process.argv[2];
 
 socket.on('message', function (msg, rinfo) {
     console.log();
     console.log('message received from %s:%d', rinfo.address, rinfo.port);
     console.log(JSON.stringify(msg));
     console.log();
+    if (rinfo.address == unifiIp) {
+        console.log("found");
+        fs.writeFile('packet.json', JSON.stringify(msg), err => {
+            if (err) {
+                console.error(err);
+            };
+        });
+        socket.close();
+    }
 });
 
 socket.on('listening', function () {
